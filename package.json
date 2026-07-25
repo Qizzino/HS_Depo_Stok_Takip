@@ -1,0 +1,55 @@
+{
+  "name": "hs-stok-takip",
+  "version": "1.9.15",
+  "description": "MSY Mühendislik Stok Takip Uygulaması",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "author": "Antigravity",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "multer": "^1.4.5-lts.1",
+    "sqlite3": "^5.0.0",
+    "xlsx": "^0.18.5",
+    "electron-updater": "^6.1.8"
+  },
+  "devDependencies": {
+    "electron": "^24.8.8",
+    "electron-builder": "^23.6.0"
+  },
+  "build": {
+    "appId": "com.hs.stoktakip",
+    "productName": "HŞ_Stok Takip",
+    "icon": "icon.png",
+    "directories": {
+      "output": "build"
+    },
+    "files": [
+      "main.js",
+      "server/**/*",
+      "client/dist/**/*",
+      "icon.png",
+      "package.json"
+    ],
+    "win": {
+      "target": "nsis"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "Qizzino",
+        "repo": "HS_Depo_Stok_Takip"
+      }
+    ]
+  }
+}
