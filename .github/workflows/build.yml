@@ -34,15 +34,7 @@ jobs:
         working-directory: ./client
         run: npm run build
 
-      - name: Build Electron App
-        run: npx electron-builder --win
-
-      - name: Upload Release Asset
-        uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
-        with:
-          files: |
-            build/*.exe
-            build/latest.yml
+      - name: Build and Publish Electron Release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm run dist -- -p always
