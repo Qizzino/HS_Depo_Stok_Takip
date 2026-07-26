@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 40px; color: #2c3e50; line-height: 1.6; max-width: 800px; margin: 0 auto; background: #fff; }
+        h1 { color: #1a56db; border-bottom: 3px solid #1a56db; padding-bottom: 10px; margin-bottom: 30px; font-size: 2.2em; text-align: center; }
+        h2 { color: #2563eb; margin-top: 40px; padding-bottom: 5px; border-bottom: 1px solid #e2e8f0; font-size: 1.5em; }
+        h3 { color: #3b82f6; margin-top: 20px; }
+        ul { margin-bottom: 20px; }
+        li { margin-bottom: 8px; }
+        p { margin-bottom: 15px; }
+        .footer { margin-top: 60px; font-size: 0.9em; color: #64748b; border-top: 1px solid #e2e8f0; padding-top: 20px; text-align: center; }
+        strong { color: #0f172a; }
+        .highlight { background-color: #f1f5f9; padding: 2px 6px; border-radius: 4px; border: 1px solid #e2e8f0; }
+    </style>
+</head>
+<body>
+    <h1>HŞ Stok Takip Sistemi<br><span style="font-size: 0.6em; color: #64748b;">Kullanım Kılavuzu</span></h1>
+    
+    <p>Bu kılavuz, HŞ Stok Takip Sistemi'nin temel özelliklerini ve kullanımını adım adım anlatmaktadır. Uygulama, şirketinizin malzeme giriş/çıkış süreçlerini, stok takibini ve depo yönetimini dijital ortamda pratik ve hatasız bir şekilde gerçekleştirmeniz için tasarlanmıştır.</p>
+
+    <h2>1. Sisteme Giriş (Login)</h2>
+    <p>Uygulamayı açtığınızda karşınıza şifreli bir giriş ekranı gelir. Size tanımlanmış olan <strong>Kullanıcı Adı</strong> ve <strong>Şifre</strong> ile sisteme güvenli bir şekilde giriş yapabilirsiniz.</p>
+    <ul>
+        <li>Sadece sisteme tanımlı, yetkili kullanıcılar erişebilir.</li>
+        <li>Giriş ekranının sol altında bulunan küçük <span class="highlight">i</span> ikonuna tıklayarak uygulamanın sürüm bilgilerini görebilir veya geliştirici ile iletişim seçeneklerine ulaşabilirsiniz.</li>
+    </ul>
+
+    <h2>2. Stok Durumu (Özet)</h2>
+    <p>Sisteme giriş yaptıktan sonra ilk açılan ana ekrandır.</p>
+    <ul>
+        <li><strong>Canlı Stok Takibi:</strong> Deponuzda bulunan tüm malzemelerin listesini, toplam parasal değerini ve depolar (Ana depo, şantiye depoları, taşeronlar) arasındaki malzeme dağılımını canlı olarak gösterir.</li>
+        <li><strong>Hızlı Arama:</strong> Üst kısımda bulunan arama çubuğu ile binlerce kalem malzeme arasından istediğiniz malzemeyi veya poz numarasını saniyeler içinde anında bulabilirsiniz.</li>
+        <li><strong>Excel İndirme:</strong> Sağ üst köşedeki <span class="highlight">Excel İndir</span> butonuna tıklayarak ekrandaki güncel stok tablosunu tek tıkla Excel (.xlsx) formatında bilgisayarınıza kaydedebilir, raporlama için kullanabilirsiniz.</li>
+    </ul>
+
+    <h2>3. Yeni Stok Hareketi (Giriş / Çıkış)</h2>
+    <p>Sisteme yeni malzeme eklemek veya sistemden malzeme düşmek için bu sayfa kullanılır.</p>
+    <ul>
+        <li><strong>İşlem Tipi Seçimi:</strong> 
+            <ul>
+                <li><strong>Malzeme Girişi:</strong> Tedarikçilerden yeni alınan veya satın alınan malzemeleri depoya eklemek için kullanılır.</li>
+                <li><strong>Malzeme Çıkışı:</strong> Depodan sahaya, taşerona veya şantiyeye gönderilen malzemeleri stoktan düşmek için kullanılır.</li>
+                <li><strong>İade İşlemleri:</strong> Sahadan depoya iade gelen, kullanılmayan malzemeler için kullanılır.</li>
+            </ul>
+        </li>
+        <li><strong>Detaylı Kayıt:</strong> İşlem yaparken; malzemenin geldiği/gittiği Kurum veya Firma, İhale Grubu, Proje Adı, Belge Numarası ve İrsaliye/Fatura gibi belgeleri PDF veya resim olarak sisteme ekleyebilirsiniz.</li>
+        <li><strong>Otomatik PDF İrsaliye:</strong> Eklenecek malzemeleri seçip <span class="highlight">Kaydet</span> butonuna bastığınızda, sistem yapılan işlemin resmi PDF fişini (irsaliyesini) otomatik olarak oluşturur ve anında yazdırmanız veya bilgisayara kaydetmeniz için ekrana getirir.</li>
+    </ul>
+
+    <h2>4. Stok Hareketleri (Geçmiş)</h2>
+    <p>Geçmişte yapılan tüm giriş-çıkış hareketlerinin, kim tarafından ve ne zaman yapıldığının kayıt altında tutulduğu sayfadır.</p>
+    <ul>
+        <li><strong>Filtreleme:</strong> İsterseniz tüm depoların hareketlerini, isterseniz sadece belirli bir şantiyenin (Örn: Afyon Depo) geçmiş hareketlerini filtreleyip inceleyebilirsiniz.</li>
+        <li><strong>Raporlama:</strong> "Çıkış Raporu", "İçe Aktar" ve "Tüm Hareketler" butonları sayesinde istediğiniz türdeki geçmiş hareketleri tek tıkla Excel'e aktarabilirsiniz.</li>
+        <li><strong>Hatalı İşlem İptali:</strong> Eğer sisteme yanlış bir giriş veya çıkış kaydı eklendiyse, bu listeden ilgili işlemi bularak silebilirsiniz. Silinen işlemin malzemeleri otomatik olarak stoğa geri eklenir veya stoktan düşülür, denge sağlanır.</li>
+    </ul>
+
+    <h2>5. Malzeme Listesi (Yönetim)</h2>
+    <p>Sisteme yeni malzeme cinsleri ve türlerinin tanımlandığı yönetim sayfasıdır.</p>
+    <ul>
+        <li><strong>Yeni Kayıt:</strong> Kullanılacak malzemelerin Malzeme Grubu, Poz Numarası (Kodu), Malzeme Adı, Temel Ölçü Birimi (Adet, Kg, Metre vb.) ve Birim Fiyatları buradan sisteme eklenir. Bu işlem bir kere yapılır ve artık sistem bu malzemeyi tanır.</li>
+        <li><strong>Toplu Excel Aktarımı:</strong> Eğer elinizde yüzlerce malzemelik hazır bir Excel listesi varsa, tek tek girmek yerine <span class="highlight">Excel İçe Aktar</span> özelliği ile tüm listeyi tek saniyede sisteme yükleyebilirsiniz.</li>
+    </ul>
+
+    <h2>6. Depo Listesi (Yönetim)</h2>
+    <p>Malzemelerin fiziksel olarak bulunabileceği lokasyonların, şantiyelerin veya taşeronların sisteme tanımlandığı sayfadır.</p>
+    <ul>
+        <li><strong>Depo Türleri:</strong> Sistemde 3 farklı ana depo tipi bulunur: Ana Depo, Tedarikçi ve Taşeron.</li>
+        <li>Siz bu ekrandan yeni bir depo (Örn: "Afyon Şantiye" veya "Ankara Yolu") eklediğiniz anda, sistem anında "Stok Durumu" tablosunda yeni bir sütun açar ve o şantiyenin stoğunu ayrı bir hesapta takip etmenize olanak tanır.</li>
+    </ul>
+
+    <h2>7. Firma Ayarları</h2>
+    <p>Uygulamanın kişiselleştirildiği ve firmanıza özel hale getirildiği bölümdür. (Sadece Admin yetkisiyle erişilebilir)</p>
+    <ul>
+        <li><strong>Firma Bilgileri:</strong> Çıktı alınan resmi PDF fişlerinin başlığında görünecek olan; Firma Adı, Vergi Dairesi, Vergi Kimlik Numarası (VKN), Telefon, E-Posta ve Açık Adres gibi bilgileri buradan güncelleyebilirsiniz.</li>
+        <li><strong>Firma Logosu:</strong> Sistemin giriş ekranında, sol menünün en üstünde ve yazdırılan resmi belgelerde görünecek olan firmanızın logosunu buradan değiştirebilirsiniz.</li>
+    </ul>
+
+    <h2>8. Admin Paneli (Sistem Yöneticisi)</h2>
+    <p>Uygulamayı kullanacak diğer ofis/depo personellerinin yönetildiği kısımdır. (Sadece Admin yetkisiyle erişilebilir)</p>
+    <ul>
+        <li>Yeni personeller için kullanıcı adı ve şifre tanımlayabilirsiniz.</li>
+        <li>Personellere <strong>Admin</strong> (tam yetkili, her ayarı değiştirebilir) veya <strong>Standart Kullanıcı</strong> (sadece stok giriş-çıkışı yapabilir, ayarları ve geçmiş kayıtları değiştiremez) yetkisi verebilirsiniz.</li>
+        <li>Artık çalışmayan personellerin hesaplarını silebilir veya bilgilerini düzenleyebilirsiniz.</li>
+    </ul>
+
+    <div class="footer">
+        <p><strong>Teknik Destek ve İletişim</strong><br>
+        Uygulama ile ilgili her türlü soru, sorun veya yeni özellik talepleriniz için <strong>Uygulama Hakkında</strong> sayfasındaki iletişim butonunu kullanarak veya doğrudan e-posta atarak teknik destek alabilirsiniz.</p>
+        <p>Sürüm: v1.9.23<br>Geliştirici: Harun Şeker (Elektrik-Elektronik Mühendisi)<br>İletişim: hrnskr21@gmail.com</p>
+    </div>
+</body>
+</html>
