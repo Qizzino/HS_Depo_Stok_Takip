@@ -30,9 +30,11 @@ if (!gotTheLock) {
 
     function createWindow() {
         mainWindow = new BrowserWindow({
-            width: 1280,
-            height: 800,
-            title: "HŞ_Stok Takip",
+            width: 450,
+            height: 650,
+            resizable: false,
+            title: "HŞ Stok Takip",
+            autoHideMenuBar: true,
             webPreferences: {
                 nodeIntegration: true,
                 contextIsolation: false
@@ -96,19 +98,40 @@ if (!gotTheLock) {
     app.whenReady().then(() => {
         createWindow();
 
-        // Otomatik Güncelleme Sistemi
+        // Otomatik Güncelleme Sistemi (İsteğe Bağlı)
+        autoUpdater.autoDownload = false;
         autoUpdater.checkForUpdatesAndNotify();
 
-        autoUpdater.on('update-available', () => {
+        autoUpdater.on('update-available', (info) => {
             dialog.showMessageBox({
                 type: 'info',
                 title: 'Güncelleme Mevcut',
-                message: 'Uygulamanın yeni bir sürümü bulundu. Arka planda indiriliyor...',
-                buttons: ['Tamam']
+                message: `Uygulamanın yeni bir sürümü (${info.version}) bulundu.\nŞimdi indirmek ve kurmak ister misiniz?`,
+                buttons: ['Evet, İndir', 'Hayır, Sonra']
+            }).then((result) => {
+                if (result.response === 0) {
+                    autoUpdater.downloadUpdate();
+                    dialog.showMessageBox({
+                        type: 'info',
+                        title: 'İndiriliyor...',
+                        message: 'Güncelleme arka planda indiriliyor. İndirme tamamlandığında size haber verilecek.',
+                        buttons: ['Tamam']
+                    });
+                }
             });
         });
 
+        autoUpdater.on('download-progress', (progressObj) => {
+            if (mainWindow) {
+                mainWindow.setProgressBar(progressObj.percent / 100);
+                mainWindow.webContents.send('update-progress', progressObj.percent);
+            }
+        });
+
         autoUpdater.on('update-downloaded', () => {
+            if (mainWindow) {
+                mainWindow.setProgressBar(-1); // Progress barı kaldır
+            }
             dialog.showMessageBox({
                 type: 'info',
                 title: 'Güncelleme Hazır',
@@ -151,6 +174,31 @@ if (!gotTheLock) {
         app.on('activate', function () {
             if (BrowserWindow.getAllWindows().length === 0) createWindow();
         });
+    });
+
+    // Pencereyi büyütme komutu (Giriş yaptıktan sonra)
+    ipcMain.on('resize-window', () => {
+        if (mainWindow) {
+            mainWindow.setResizable(true);
+            mainWindow.setMinimumSize(1000, 700);
+            mainWindow.setSize(1200, 800);
+            mainWindow.center();
+        }
+    });
+
+    // Pencereyi küçültme komutu (Çıkış yaptıktan sonra)
+    ipcMain.on('shrink-window', () => {
+        if (mainWindow) {
+            mainWindow.setMinimumSize(450, 650);
+            mainWindow.setSize(450, 650);
+            mainWindow.setResizable(false);
+            mainWindow.center();
+        }
+    });
+
+    // Uygulama versiyonunu döndür
+    ipcMain.handle('get-app-version', () => {
+        return app.getVersion();
     });
 
     // React'ten gelen tamamen çıkış komutu

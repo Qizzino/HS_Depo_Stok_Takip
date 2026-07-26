@@ -8,7 +8,7 @@ import Ayarlar from './components/Ayarlar'
 import Login from './components/Login'
 import AdminPanel from './components/AdminPanel'
 import PrintLayout from './components/PrintLayout'
-import KullanimKilavuzu from './components/KullanimKilavuzu'
+import Hakkinda from './components/Hakkinda'
 
 const { ipcRenderer } = window.require ? window.require('electron') : { ipcRenderer: null };
 
@@ -19,6 +19,7 @@ function App() {
   const [toastMsg, setToastMsg] = useState(null)
   const [printData, setPrintData] = useState(null)
   const [previewSaveAction, setPreviewSaveAction] = useState(null) // Önizlemeden sonra kaydetme fonksiyonunu tutar
+  const [updateProgress, setUpdateProgress] = useState(null)
 
   const fetchAyarlar = () => {
     fetch('http://localhost:3001/api/ayarlar')
@@ -42,10 +43,19 @@ function App() {
       setToastMsg(msg)
       setTimeout(() => setToastMsg(null), 3000)
     }
+
+    if (ipcRenderer) {
+      ipcRenderer.on('update-progress', (event, percent) => {
+        setUpdateProgress(percent)
+      })
+    }
   }, [])
 
   const handleLogout = () => {
     setCurrentUser(null)
+    if (ipcRenderer) {
+      ipcRenderer.send('shrink-window')
+    }
   }
 
   const handleQuit = () => {
@@ -57,7 +67,10 @@ function App() {
   }
 
   if (!currentUser) {
-    return <Login onLogin={setCurrentUser} ayarlar={ayarlar} />
+    return <Login onLogin={(user) => {
+      setCurrentUser(user);
+      if (ipcRenderer) ipcRenderer.send('resize-window');
+    }} ayarlar={ayarlar} />
   }
 
   return (
@@ -106,8 +119,8 @@ function App() {
           )}
 
           <div style={{ flexGrow: 1 }}></div>
-          <div className={`nav-item ${activeTab === 'kilavuz' ? 'active' : ''}`} onClick={() => setActiveTab('kilavuz')} style={{ marginTop: 'auto', marginBottom: '1rem', borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '1rem' }}>
-            📖 Kullanım Kılavuzu
+          <div className={`nav-item ${activeTab === 'kilavuz' ? 'active' : ''}`} onClick={() => setActiveTab('kilavuz')} style={{ marginTop: 'auto', marginBottom: '1rem', borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '1rem', color: '#b0bec5' }}>
+            ℹ️ Hakkında
           </div>
           <div className="nav-item" onClick={handleLogout} style={{ color: 'var(--warning-color)' }}>
             🔓 Oturumu Kapat ({currentUser.username})
@@ -128,7 +141,7 @@ function App() {
             {activeTab === 'depolar' && 'Depo ve İş Grupları Tanımlama'}
             {activeTab === 'ayarlar' && 'Sistem Ayarları'}
             {activeTab === 'admin' && 'Sistem Yöneticisi'}
-            {activeTab === 'kilavuz' && 'Kullanım Kılavuzu'}
+            {activeTab === 'kilavuz' && 'Uygulama Hakkında'}
           </h1>
           <p>{ayarlar.firma_adi} Depo Takip Sistemi</p>
         </div>
@@ -155,7 +168,7 @@ function App() {
           {activeTab === 'depolar' && <Depolar />}
           {activeTab === 'ayarlar' && <Ayarlar currentUser={currentUser} onSettingsChange={fetchAyarlar} />}
           {activeTab === 'admin' && <AdminPanel currentUser={currentUser} />}
-          {activeTab === 'kilavuz' && <KullanimKilavuzu />}
+          {activeTab === 'kilavuz' && <Hakkinda />}
         </div>
       </div>
 
@@ -166,6 +179,17 @@ function App() {
           zIndex: 9999, animation: 'slideUp 0.3s ease', fontSize: '1.1rem', fontWeight: 'bold'
         }}>
           {toastMsg}
+        </div>
+      )}
+
+      {updateProgress !== null && (
+        <div style={{
+          position: 'fixed', top: '0', left: '0', width: '100%', height: '4px', background: 'rgba(255,255,255,0.1)', zIndex: 9999
+        }}>
+          <div style={{ width: `${updateProgress}%`, height: '100%', background: 'var(--primary-color)', transition: 'width 0.3s ease' }}></div>
+          <div style={{ position: 'absolute', top: '10px', right: '20px', background: 'var(--bg-secondary)', padding: '5px 10px', borderRadius: '4px', fontSize: '0.8rem', color: 'var(--text-color)' }}>
+            Güncelleme İndiriliyor: %{Math.round(updateProgress)}
+          </div>
         </div>
       )}
 

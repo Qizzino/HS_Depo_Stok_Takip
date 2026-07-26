@@ -1,6 +1,6 @@
 {
   "name": "hs-stok-takip",
-  "version": "1.9.18",
+  "version": "1.9.15",
   "description": "MSY Mühendislik Stok Takip Uygulaması",
   "main": "main.js",
   "scripts": {
