@@ -174,16 +174,16 @@ if (!gotTheLock) {
                 if (isDev) {
                     manualPath = path.join(__dirname, 'client', 'public', 'Kullanim_Kilavuzu.html');
                 } else {
-                    manualPath = path.join(process.resourcesPath, 'app.asar', 'client', 'build', 'Kullanim_Kilavuzu.html');
+                    manualPath = path.join(process.resourcesPath, 'app.asar', 'client', 'dist', 'Kullanim_Kilavuzu.html');
                     // Eğer asar içinde değilse (örneğin kopyalanmamışsa), resources içinden dene
                     if (!fs.existsSync(manualPath)) {
-                         manualPath = path.join(process.resourcesPath, 'client', 'build', 'Kullanim_Kilavuzu.html');
+                         manualPath = path.join(process.resourcesPath, 'client', 'dist', 'Kullanim_Kilavuzu.html');
                     }
                 }
 
                 if (!fs.existsSync(manualPath)) {
                     // Fallback to dev path if somehow packaged wrongly
-                    manualPath = path.join(__dirname, 'client', 'build', 'Kullanim_Kilavuzu.html');
+                    manualPath = path.join(__dirname, 'client', 'dist', 'Kullanim_Kilavuzu.html');
                 }
 
                 if (!fs.existsSync(manualPath)) {
