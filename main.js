@@ -30,8 +30,8 @@ if (!gotTheLock) {
 
     function createWindow() {
         mainWindow = new BrowserWindow({
-            width: 450,
-            height: 650,
+            width: 480,
+            height: 750,
             resizable: false,
             title: "HŞ Stok Takip",
             autoHideMenuBar: true,
@@ -189,8 +189,8 @@ if (!gotTheLock) {
     // Pencereyi küçültme komutu (Çıkış yaptıktan sonra)
     ipcMain.on('shrink-window', () => {
         if (mainWindow) {
-            mainWindow.setMinimumSize(450, 650);
-            mainWindow.setSize(450, 650);
+            mainWindow.setMinimumSize(480, 750);
+            mainWindow.setSize(480, 750);
             mainWindow.setResizable(false);
             mainWindow.center();
         }
