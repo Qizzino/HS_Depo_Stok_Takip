@@ -103,19 +103,18 @@ if (!gotTheLock) {
         autoUpdater.checkForUpdatesAndNotify();
 
         autoUpdater.on('update-available', (info) => {
-            dialog.showMessageBox({
+            dialog.showMessageBox(mainWindow, {
                 type: 'info',
                 title: 'Güncelleme Mevcut',
                 message: `Uygulamanın yeni bir sürümü (${info.version}) bulundu.\nŞimdi indirmek ve kurmak ister misiniz?`,
                 buttons: ['Evet, İndir', 'Hayır, Sonra']
             }).then((result) => {
                 if (result.response === 0) {
-                    autoUpdater.downloadUpdate();
-                    dialog.showMessageBox({
-                        type: 'info',
-                        title: 'İndiriliyor...',
-                        message: 'Güncelleme arka planda indiriliyor. İndirme tamamlandığında size haber verilecek.',
-                        buttons: ['Tamam']
+                    if (mainWindow) {
+                        mainWindow.setTitle('Güncelleme İndiriliyor... Lütfen Bekleyin');
+                    }
+                    autoUpdater.downloadUpdate().catch(err => {
+                        dialog.showErrorBox('İndirme Hatası', err == null ? "Bilinmeyen hata" : err.toString());
                     });
                 }
             });
@@ -124,13 +123,15 @@ if (!gotTheLock) {
         autoUpdater.on('download-progress', (progressObj) => {
             if (mainWindow) {
                 mainWindow.setProgressBar(progressObj.percent / 100);
+                mainWindow.setTitle(`Güncelleme İndiriliyor: %${Math.round(progressObj.percent)}`);
                 mainWindow.webContents.send('update-progress', progressObj.percent);
             }
         });
 
         autoUpdater.on('update-downloaded', () => {
             if (mainWindow) {
-                mainWindow.setProgressBar(-1); // Progress barı kaldır
+                mainWindow.setProgressBar(-1);
+                mainWindow.setTitle('HŞ Stok Takip');
             }
             dialog.showMessageBox({
                 type: 'info',
@@ -144,7 +145,7 @@ if (!gotTheLock) {
         });
 
         autoUpdater.on('error', (err) => {
-            console.error('Güncelleme hatası:', err);
+            dialog.showErrorBox('Güncelleme Sistemi Hatası', err == null ? "Bilinmeyen bir hata oluştu." : (err.stack || err).toString());
         });
 
         // Manuel güncelleme kontrolü
