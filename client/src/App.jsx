@@ -119,14 +119,20 @@ function App() {
           )}
 
           <div style={{ flexGrow: 1 }}></div>
-          <div className={`nav-item ${activeTab === 'kilavuz' ? 'active' : ''}`} onClick={() => setActiveTab('kilavuz')} style={{ marginTop: 'auto', marginBottom: '1rem', borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '1rem', color: '#b0bec5' }}>
-            ℹ️ Hakkında
-          </div>
           <div className="nav-item" onClick={handleLogout} style={{ color: 'var(--warning-color)' }}>
             🔓 Oturumu Kapat ({currentUser.username})
           </div>
-          <div className="nav-item" onClick={handleQuit} style={{ color: 'var(--danger-color)', marginTop: '0.5rem', fontWeight: 'bold' }}>
+          <div className="nav-item" onClick={handleQuit} style={{ color: 'var(--danger-color)', marginTop: '0.2rem', fontWeight: 'bold' }}>
             🚪 Uygulamadan Çıkış Yap
+          </div>
+
+          <div style={{ textAlign: 'center', marginTop: '1rem', fontSize: '0.75rem' }}>
+            <span 
+              onClick={() => setActiveTab('kilavuz')} 
+              style={{ color: activeTab === 'kilavuz' ? 'var(--accent-color)' : 'var(--text-secondary)', cursor: 'pointer', textDecoration: 'underline' }}
+            >
+              Uygulama Hakkında
+            </span>
           </div>
         </div>
       </div>

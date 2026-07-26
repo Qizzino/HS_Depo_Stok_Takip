@@ -81,21 +81,48 @@ export default function Hakkinda() {
           <p style={{ margin: '0.5rem 0' }}><strong>İletişim:</strong> hrnskr21@gmail.com</p>
         </div>
 
-        <button 
-          onClick={handleContact}
-          className="btn-primary" 
-          style={{ 
-            padding: '10px 24px', 
-            fontSize: '1rem', 
-            borderRadius: '8px',
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '8px',
-            backgroundColor: 'var(--accent-color)'
-          }}
-        >
-          ✉️ Geliştiriciyle İletişime Geç
-        </button>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', marginTop: '1rem' }}>
+          <button 
+            onClick={handleContact}
+            className="btn-primary" 
+            style={{ 
+              padding: '10px 24px', 
+              fontSize: '1rem', 
+              borderRadius: '8px',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '8px',
+              backgroundColor: 'var(--accent-color)'
+            }}
+          >
+            ✉️ Geliştiriciyle İletişime Geç
+          </button>
+
+          <button 
+            onClick={() => {
+              if (window.require) {
+                const { ipcRenderer } = window.require('electron');
+                ipcRenderer.send('check-for-updates');
+                alert("Güncellemeler kontrol ediliyor, lütfen bekleyin...");
+              } else {
+                alert("Tarayıcıda güncelleme kontrolü yapılamaz.");
+              }
+            }}
+            className="btn-primary" 
+            style={{ 
+              padding: '10px 24px', 
+              fontSize: '1rem', 
+              borderRadius: '8px',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '8px',
+              backgroundColor: 'rgba(255,255,255,0.1)',
+              border: '1px solid rgba(255,255,255,0.2)'
+            }}
+          >
+            🔄 Güncellemeleri Kontrol Et
+          </button>
+        </div>
       </div>
     </div>
   )

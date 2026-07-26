@@ -147,6 +147,11 @@ if (!gotTheLock) {
             console.error('Güncelleme hatası:', err);
         });
 
+        // Manuel güncelleme kontrolü
+        ipcMain.on('check-for-updates', () => {
+            autoUpdater.checkForUpdatesAndNotify();
+        });
+
         // Tray (Sistem Tepsisi) oluştur
         let iconPath = path.join(__dirname, 'icon.png');
         let icon = nativeImage.createFromPath(iconPath);

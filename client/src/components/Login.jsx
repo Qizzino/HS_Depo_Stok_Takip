@@ -54,8 +54,8 @@ export default function Login({ onLogin, ayarlar }) {
     }
 
     return (
-        <div style={{ display: 'flex', height: '100vh', alignItems: 'center', justifyContent: 'center', background: 'var(--bg-color)' }}>
-            <div className="glass-panel" style={{ width: '100%', maxWidth: '400px', padding: '3rem', textAlign: 'center', position: 'relative' }}>
+        <div style={{ display: 'flex', minHeight: '100vh', alignItems: 'center', justifyContent: 'center', background: 'var(--bg-color)' }}>
+            <div className="glass-panel" style={{ width: '100%', maxWidth: '400px', padding: '3rem', margin: '2rem 0', textAlign: 'center', position: 'relative' }}>
                 {ayarlar?.logo_url && (
                     <img 
                       src={ayarlar.logo_url} 
