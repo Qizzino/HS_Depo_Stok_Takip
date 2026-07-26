@@ -1,8 +1,8 @@
 {
   "name": "hs-stok-takip",
   "productName": "HS Stok Takip",
-  "version": "1.9.27",
-  "description": "HÅ Stok Takip UygulamasÄ±",
+  "version": "1.9.28",
+  "description": "HŞ Stok Takip Uygulaması",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
@@ -25,7 +25,7 @@
   },
   "build": {
     "appId": "com.hs.stoktakip",
-    "productName": "HÅ_Stok Takip",
+    "productName": "HS_Stok Takip",
     "icon": "icon.png",
     "directories": {
       "output": "build"

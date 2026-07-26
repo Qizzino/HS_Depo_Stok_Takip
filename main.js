@@ -206,7 +206,7 @@ if (!gotTheLock) {
                 });
                 
                 const desktopPath = app.getPath('desktop');
-                const pdfSavePath = path.join(desktopPath, 'MSY_Kullanim_Kilavuzu.pdf');
+                const pdfSavePath = path.join(desktopPath, 'HS_Kullanim_Kilavuzu.pdf');
                 
                 fs.writeFileSync(pdfSavePath, pdfData);
                 
