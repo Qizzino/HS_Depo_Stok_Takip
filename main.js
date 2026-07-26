@@ -148,6 +148,16 @@ if (!gotTheLock) {
             dialog.showErrorBox('Güncelleme Sistemi Hatası', err == null ? "Bilinmeyen bir hata oluştu." : (err.stack || err).toString());
         });
 
+        autoUpdater.on('update-not-available', (info) => {
+            dialog.showMessageBox({
+                type: 'info',
+                title: 'Güncelleme Kontrolü',
+                message: 'Şu anda en güncel sürümü kullanıyorsunuz.',
+                detail: `Mevcut sürümünüz: v${app.getVersion()}`,
+                buttons: ['Tamam']
+            });
+        });
+
         // Manuel güncelleme kontrolü
         ipcMain.on('check-for-updates', () => {
             autoUpdater.checkForUpdatesAndNotify();
