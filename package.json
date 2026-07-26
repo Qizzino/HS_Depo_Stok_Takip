@@ -1,7 +1,7 @@
 {
   "name": "hs-stok-takip",
   "productName": "HS Stok Takip",
-  "version": "1.9.26",
+  "version": "1.9.27",
   "description": "HÅ Stok Takip UygulamasÄ±",
   "main": "main.js",
   "scripts": {

@@ -20,6 +20,7 @@ function App() {
   const [printData, setPrintData] = useState(null)
   const [previewSaveAction, setPreviewSaveAction] = useState(null) // Önizlemeden sonra kaydetme fonksiyonunu tutar
   const [updateProgress, setUpdateProgress] = useState(null)
+  const [updateReadyVersion, setUpdateReadyVersion] = useState(null)
 
   const fetchAyarlar = () => {
     fetch('http://localhost:3001/api/ayarlar')
@@ -47,6 +48,10 @@ function App() {
     if (ipcRenderer) {
       ipcRenderer.on('update-progress', (event, percent) => {
         setUpdateProgress(percent)
+      })
+      ipcRenderer.on('update-downloaded', (event, version) => {
+        setUpdateProgress(null)
+        setUpdateReadyVersion(version)
       })
     }
   }, [])
@@ -187,14 +192,43 @@ function App() {
           {toastMsg}
         </div>
       )}
-
+        {/* Güncelleme İndirme İlerlemesi */}
       {updateProgress !== null && (
-        <div style={{
-          position: 'fixed', top: '0', left: '0', width: '100%', height: '4px', background: 'rgba(255,255,255,0.1)', zIndex: 9999
-        }}>
-          <div style={{ width: `${updateProgress}%`, height: '100%', background: 'var(--primary-color)', transition: 'width 0.3s ease' }}></div>
-          <div style={{ position: 'absolute', top: '10px', right: '20px', background: 'var(--bg-secondary)', padding: '5px 10px', borderRadius: '4px', fontSize: '0.8rem', color: 'var(--text-color)' }}>
+        <div style={{ position: 'fixed', top: '20px', right: '20px', background: 'var(--surface-color)', padding: '15px', borderRadius: '8px', boxShadow: '0 4px 12px rgba(0,0,0,0.5)', zIndex: 9999, width: '250px', border: '1px solid rgba(255,255,255,0.1)' }}>
+          <div style={{ marginBottom: '8px', fontSize: '0.85rem', fontWeight: 'bold' }}>
             Güncelleme İndiriliyor: %{Math.round(updateProgress)}
+          </div>
+          <div style={{ width: '100%', height: '6px', background: 'rgba(255,255,255,0.1)', borderRadius: '3px', overflow: 'hidden' }}>
+            <div style={{ width: `${updateProgress}%`, height: '100%', background: 'var(--primary-color)', transition: 'width 0.3s ease' }}></div>
+          </div>
+        </div>
+      )}
+
+      {/* Güncelleme Hazır Uyarısı */}
+      {updateReadyVersion && (
+        <div style={{ position: 'fixed', top: '20px', right: '20px', background: 'var(--surface-color)', padding: '15px', borderRadius: '8px', boxShadow: '0 4px 12px rgba(0,0,0,0.5)', zIndex: 9999, width: '280px', border: '1px solid rgba(255,255,255,0.1)' }}>
+          <div style={{ marginBottom: '12px', fontSize: '0.9rem', fontWeight: 'bold', color: 'var(--success-color)' }}>
+            🎉 Yeni Sürüm (v{updateReadyVersion}) İndirildi!
+          </div>
+          <div style={{ display: 'flex', gap: '8px' }}>
+            <button 
+              className="btn-primary" 
+              style={{ flex: 1, padding: '6px', fontSize: '0.85rem' }}
+              onClick={() => {
+                if (window.require) {
+                  window.require('electron').ipcRenderer.send('install-update');
+                }
+              }}
+            >
+              Şimdi Yükle
+            </button>
+            <button 
+              className="btn-danger" 
+              style={{ flex: 1, padding: '6px', fontSize: '0.85rem' }}
+              onClick={() => setUpdateReadyVersion(null)}
+            >
+              Vazgeç
+            </button>
           </div>
         </div>
       )}

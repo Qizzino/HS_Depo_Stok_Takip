@@ -99,10 +99,13 @@ if (!gotTheLock) {
         createWindow();
 
         // Otomatik Güncelleme Sistemi (İsteğe Bağlı)
+        let isManualUpdateCheck = false;
         autoUpdater.autoDownload = false;
+        // Başlangıçta sadece sessiz kontrol yap
         autoUpdater.checkForUpdatesAndNotify();
 
         autoUpdater.on('update-available', (info) => {
+            isManualUpdateCheck = false;
             dialog.showMessageBox(mainWindow, {
                 type: 'info',
                 title: 'Güncelleme Mevcut',
@@ -128,38 +131,42 @@ if (!gotTheLock) {
             }
         });
 
-        autoUpdater.on('update-downloaded', () => {
+        autoUpdater.on('update-downloaded', (info) => {
             if (mainWindow) {
                 mainWindow.setProgressBar(-1);
                 mainWindow.setTitle('HŞ Stok Takip');
+                mainWindow.webContents.send('update-downloaded', info.version);
             }
-            dialog.showMessageBox({
-                type: 'info',
-                title: 'Güncelleme Hazır',
-                message: 'Yeni sürüm başarıyla indirildi. Yüklemek için uygulama şimdi yeniden başlatılacak.',
-                buttons: ['Yeniden Başlat ve Yükle']
-            }).then(() => {
-                isQuitting = true;
-                autoUpdater.quitAndInstall();
-            });
+        });
+
+        ipcMain.on('install-update', () => {
+            isQuitting = true;
+            autoUpdater.quitAndInstall();
         });
 
         autoUpdater.on('error', (err) => {
+            isManualUpdateCheck = false;
             dialog.showErrorBox('Güncelleme Sistemi Hatası', err == null ? "Bilinmeyen bir hata oluştu." : (err.stack || err).toString());
         });
 
         autoUpdater.on('update-not-available', (info) => {
-            dialog.showMessageBox({
-                type: 'info',
-                title: 'Güncelleme Kontrolü',
-                message: 'Şu anda en güncel sürümü kullanıyorsunuz.',
-                detail: `Mevcut sürümünüz: v${app.getVersion()}`,
-                buttons: ['Tamam']
-            });
+            if (isManualUpdateCheck) {
+                dialog.showMessageBox({
+                    type: 'info',
+                    title: 'Güncelleme Kontrolü',
+                    message: 'Şu anda en güncel sürümü kullanıyorsunuz.',
+                    detail: `Mevcut sürümünüz: v${app.getVersion()}`,
+                    buttons: ['Tamam']
+                });
+                isManualUpdateCheck = false;
+            }
         });
+
+        // Removed duplicate update-available listener
 
         // Manuel güncelleme kontrolü
         ipcMain.on('check-for-updates', () => {
+            isManualUpdateCheck = true;
             autoUpdater.checkForUpdatesAndNotify();
         });
 
